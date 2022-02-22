@@ -9,7 +9,7 @@ const path = require('path');
 let socketList = {};
 
 var corOptions ={
-  origin:"https://master.d2p32jz8cu0did.amplifyapp.com"
+  origin:"https://master.d2y3ihcoyk6hn1.amplifyapp.com"
 }
 app.use(cors(corOptions))
 
