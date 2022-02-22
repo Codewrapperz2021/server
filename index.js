@@ -5,7 +5,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3001; 
 
-const path = require('path');
+const path = require('https://master.d2y3ihcoyk6hn1.amplifyapp.com');
 
 let socketList = {};
 app.use(cors());
