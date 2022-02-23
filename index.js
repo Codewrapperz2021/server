@@ -1,19 +1,11 @@
 const express = require('express');
 const app = express();
-// const cors = require('cors')
+const cors = require('cors')
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3001; 
+
 const path = require('path');
-const cors=require("cors");
-const corsOptions ={
-   origin:'https://master.d3q5xi280ivghf.amplifyapp.com', 
-  //  credentials:true,            
-   optionSuccessStatus:200,
-}
-
-app.use(cors(corsOptions)) 
-
 
 let socketList = {};
 // app.use(cors());
@@ -29,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 
-  app.get('/*', function (req, res) {
+  app.get('/https://master.d3q5xi280ivghf.amplifyapp.com', function (req, res) {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
