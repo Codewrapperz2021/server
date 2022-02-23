@@ -1,17 +1,22 @@
 const express = require('express');
 const app = express();
-const cors = require('cors')
+ cors = require('cors')
 const http = require('http').createServer(app);
+const https = require('https');
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3001; 
 
 const path = require('path');
 
 let socketList = {};
-// app.use(cors());
+
+app.all('https://master.d2y3ihcoyk6hn1.amplifyapp.com', (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://master.d3q5xi280ivghf.amplifyapp.com");
+  next();
+});
 
 // var corOptions ={
-//   origin:"https://master.d3q5xi280ivghf.amplifyapp.com"
+//   origin:"https://master.d2y3ihcoyk6hn1.amplifyapp.com"
 // }
 // app.use(cors(corOptions))
 
@@ -21,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 
-  app.get('/https://master.d3q5xi280ivghf.amplifyapp.com', function (req, res) {
+  app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
