@@ -3,17 +3,15 @@ const app = express();
 const cors = require('cors')
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-const PORT = process.env.PORT || 3001; 
+// const PORT = process.env.PORT || 3001; 
 
 const path = require('path');
 
 let socketList = {};
+
 app.use(cors());
 
-var corOptions ={
-  origin:"https://master.d2y3ihcoyk6hn1.amplifyapp.com"
-}
-app.use(cors(corOptions))
+
 
 
 app.use(express.static(path.join(__dirname, 'public')));
