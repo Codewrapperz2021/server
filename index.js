@@ -1,8 +1,7 @@
 const express = require('express');
 const app = express();
- cors = require('cors')
+const cors = require('cors')
 const http = require('http').createServer(app);
-const https = require('https');
 const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3001; 
 
@@ -10,15 +9,12 @@ const path = require('path');
 
 let socketList = {};
 
-app.all('*', (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://master.d3q5xi280ivghf.amplifyapp.com");
-  next();
-});
 
-// var corOptions ={
-//   origin:"https://master.d2y3ihcoyk6hn1.amplifyapp.com"
-// }
-// app.use(cors(corOptions))
+
+var corOptions ={
+  origin:"https://master.d2p32jz8cu0did.amplifyapp.com"
+}
+app.use(cors(corOptions))
 
 
 app.use(express.static(path.join(__dirname, 'public')));
