@@ -10,7 +10,7 @@ const path = require('path');
 
 let socketList = {};
 
-app.all('https://master.d2y3ihcoyk6hn1.amplifyapp.com', (req, res, next) => {
+app.all('*', (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://master.d3q5xi280ivghf.amplifyapp.com");
   next();
 });
