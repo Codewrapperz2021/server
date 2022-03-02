@@ -2,16 +2,11 @@ const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-const PORT = process.env.PORT || 3001; 
-// const cors= require('cors')
+const PORT = process.env.PORT || 3003; 
 const path = require('path');
 
 let socketList = {};
 
-// var corOptions ={
-//   origin:"https://master.d2y3ihcoyk6hn1.amplifyapp.com"
-// }
-// app.use(cors(corOptions))
 
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,6 +18,24 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
+
+
+//middleware
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
+
+//router
+const chatrouter = require('./routes/chatRouter')
+const meetrouter = require('./routes/meetRouter')
+const userrouter = require('./routes/userRouter')
+
+app.use('/api/chats',chatrouter)
+app.use('/api/meets',meetrouter)
+app.use('/api/users',userrouter)
+
+//staic images 
+app.use('/Files',express.static('./Files'))
 
 // Route
 app.get('/ping', (req, res) => {
@@ -58,12 +71,29 @@ io.on('connection', (socket) => {
   /**
    * Join Room
    */
+
+
+
+  
   socket.on('BE-join-room', ({ roomId, userName }) => {
+    var numUser = io.sockets.userName.length;
+    if (numUser === 0){
+      socket.join(roomId);
+
+    }
+    else if(numUser===1){
+      socket.join(roomId);
+    }
+    else{
+      socket.emit('full',roomId)
+    }
     // Socket Join RoomName
     socket.join(roomId);
     socketList[socket.id] = { userName, video: true, audio: true };
 
-    // Set User List
+
+
+// Set User List
     io.sockets.in(roomId).clients((err, clients) => {
       try {
         const users = [];
@@ -78,6 +108,9 @@ io.on('connection', (socket) => {
       }
     });
   });
+
+
+
 
   socket.on('BE-call-user', ({ userToCall, from, signal }) => {
     io.to(userToCall).emit('FE-receive-call', {
