@@ -5,6 +5,9 @@ const io = require('socket.io')(http);
 const PORT = process.env.PORT || 3001; 
 // const cors= require('cors')
 const path = require('path');
+const cors = require("cors");
+var corOptions = { origin: "*" };
+app.use(cors(corOptions));
 
 let socketList = {};
 
