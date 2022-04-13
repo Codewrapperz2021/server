@@ -74,8 +74,8 @@ io.on('connection', (socket) => {
           // Add User List
           users.push({ userId: client, info: socketList[client] });
         });
-        //socket.broadcast.to(roomId).emit('FE-user-join', users);
-        io.sockets.in(roomId).emit('FE-user-join', users);
+        socket.broadcast.to(roomId).emit('FE-user-join', users);
+        //io.sockets.in(roomId).emit('FE-user-join', users);
       } catch (e) {
         io.sockets.in(roomId).emit('FE-error-user-exist', { err: true });
       }
