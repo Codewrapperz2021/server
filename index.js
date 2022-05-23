@@ -42,7 +42,8 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     socket.disconnect();
-    console.log('User disconnected!');
+    
+    console.log(`User disconnected! ${socket.id}`);
   });
 
   socket.on('BE-check-user', ({ roomId, userName }) => {
